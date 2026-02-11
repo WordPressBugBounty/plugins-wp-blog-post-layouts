@@ -1,9 +1,9 @@
 === WP Blog Post Layouts ===
 Contributors:       codevibrant
 Tags:               gutenberg-blocks, grid, post layouts, elementor, blocks, block editor, drag-and-drop, editor, gutenberg, gutenberg editor, page-builder, design, google fonts
-Requires at least:  4.6
-Tested up to:       6.5
-Requires PHP:       5.2
+Requires at least:  5.0
+Tested up to:       6.8
+Requires PHP:       7.2
 Stable tag:         1.1.4
 License:            GNU General Public License v3 or later
 License URI:        http://www.gnu.org/licenses/gpl-3.0.html
@@ -107,7 +107,8 @@ Yes, this plugin comes with a flexible and customizable typography option
 == Changelog ==
 
 = 1.1.4 - June 20, 2024 =
-   Fixed - 
+   Fixed - Issue in elementor file path.
+   Fixed - Fixed Escaping in required strings.
 
 = 1.1.3 - December 15, 2023 =
    Fixed - bugs of font style in typography.
