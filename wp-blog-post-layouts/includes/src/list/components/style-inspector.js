@@ -151,7 +151,7 @@ export default class StyleInspector extends Component {
                 <PanelBody title={ escapeHTML( __( 'Layout Settings', 'wp-blog-post-layouts' ) ) } initialOpen = { false }>
                     <div className="wpblog-layout-button-group">
                         <div>
-                            <label>{ escapeHTML( __( 'List Layout Variations', 'blog-post-layouts' ) ) }</label>
+                            <label>{ escapeHTML( __( 'List Layout Variations', 'wp-blog-post-layouts' ) ) }</label>
                         </div>
                         <div>
                             <Button className={ `${( layoutOption == 'layout-one') ? "isActive" : "" }` } onClick={ ( e ) => setAttributes( { layoutOption: 'layout-one' } ) }><img src={ BlocksBuildObject.listLayoutOne } /></Button>

@@ -7,6 +7,9 @@
  * 
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 if ( !class_exists( 'Wpblog_Post_Layouts_Dynamic_Css' ) ):
 
     class Wpblog_Post_Layouts_Dynamic_Css {
@@ -44,13 +47,16 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Dynamic_Css' ) ):
          * @return void
          */
         public function __construct() {
-            add_action( 'wp_enqueue_scripts', array( $this, 'add_dynamic_css' ), 99 );
+            add_action( 'enqueue_block_assets', array( $this, 'add_dynamic_css' ), 99 );
         }
 
         /**
          * Add dynamic styles of the block.
          */
         public function add_dynamic_css() {
+            if ( is_admin() ) {
+                return;
+            }
             global $post;
             if ( !isset( $post->post_content ) ) {
                 return;

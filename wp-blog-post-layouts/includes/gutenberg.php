@@ -7,6 +7,10 @@
  * @package WP Blog Post Layouts
  * 
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 if ( !class_exists( 'Wpblog_Post_Layouts_Blocks' ) ):
 
     class Wpblog_Post_Layouts_Blocks {
@@ -100,6 +104,12 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Blocks' ) ):
             wp_enqueue_style( 'wpblog-post-layouts-editor-fonts', esc_url( $cv_fonts_url ), array(), WPBLOG_POST_LAYOUTS_VERSION );
             wp_enqueue_style( 'fontawesome',
                 plugins_url( 'assets/fontawesome/css/all.min.css', __FILE__ ),
+                array(),
+                WPBLOG_POST_LAYOUTS_VERSION,
+                'all'
+            );
+            wp_enqueue_style( 'wpblog-post-layouts-icon-style',
+                plugins_url( 'assets/cv-icons/style.css', __FILE__ ),
                 array(),
                 WPBLOG_POST_LAYOUTS_VERSION,
                 'all'
@@ -204,13 +214,19 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Blocks' ) ):
          *  Register the blog post layouts blocks in gutenberg editor.
          */
         public function register_gutenberg_blocks() {
+            $style_handles = array( 'fontawesome', 'wpblog-post-layouts-icon-style', 'wpblog-post-layouts-block-style' );
+
             register_block_type( 'wpblog-post-layouts/cv-grid-blog-post-layout', array(
-                'attributes' => $this->get_common_attributes(),
+                'editor_style' => $style_handles,
+                'style'        => $style_handles,
+                'attributes'   => $this->get_common_attributes(),
                 'render_callback' => array( $this, 'cv_post_grid_blocks_layout_callback' )
             ) );
 
             register_block_type( 'wpblog-post-layouts/cv-list-blog-post-layout', array(
-                'attributes' => array(
+                'editor_style' => $style_handles,
+                'style'        => $style_handles,
+                'attributes'   => array(
                     'blockID'=> array(
                         'type' => 'string',
                         'default' => ''
@@ -536,7 +552,9 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Blocks' ) ):
             ) );
 
             register_block_type( 'wpblog-post-layouts/cv-masonry-blog-post-layout', array(
-                'attributes' => $this->get_common_attributes(),
+                'editor_style' => $style_handles,
+                'style'        => $style_handles,
+                'attributes'   => $this->get_common_attributes(),
                 'render_callback'   => array( $this, 'cv_post_masonry_blocks_layout_callback' )
             ) );
         }
@@ -877,7 +895,7 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Blocks' ) ):
         public function cv_post_grid_blocks_layout_callback( $attributes ) {
             ob_start();
                 extract( $attributes );
-                echo '<div id="cv-grid-post-layout" class="block-'.esc_attr( $blockID ).' cv-block cv-block-grid--'.esc_attr( $layoutOption ).'">';
+                echo '<div id="cv-grid-post-layout-'.esc_attr( $blockID ).'" class="block-'.esc_attr( $blockID ).' cv-block cv-block-grid--'.esc_attr( $layoutOption ).'">';
                     if ( !empty( $blockTitle ) ) {
                         echo '<h2 class="cv-block-title align--' .esc_attr( $blockTitleAlign ). ' layout--'.esc_attr( $blockTitleLayout ).'"><span>'.esc_html( $blockTitle ).'</span></h2>';
                     }
@@ -894,7 +912,7 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Blocks' ) ):
         public function cv_post_list_blocks_layout_callback( $attributes ) {
             ob_start();
                 extract( $attributes );
-                echo '<div id="cv-list-post-layout" class="block-'.esc_attr( $blockID ).' cv-block cv-block-list--'.esc_attr( $layoutOption ).'">';
+                echo '<div id="cv-list-post-layout-'.esc_attr( $blockID ).'" class="block-'.esc_attr( $blockID ).' cv-block cv-block-list--'.esc_attr( $layoutOption ).'">';
                     if ( !empty( $blockTitle ) ) {
                         echo '<h2 class="cv-block-title align--' .esc_attr( $blockTitleAlign ). ' layout--'.esc_attr( $blockTitleLayout ).'"><span>'.esc_html( $blockTitle ).'</span></h2>';
                     }
@@ -911,7 +929,7 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Blocks' ) ):
         public function cv_post_masonry_blocks_layout_callback( $attributes ) {
             ob_start();
                 extract( $attributes );
-                echo '<div id="cv-masonry-post-layout" class="block-'.esc_attr( $blockID ).' cv-block cv-masonry-post-layout cv-block-masonry--'.esc_attr( $layoutOption ).' cv-block-grid--'.esc_attr( $layoutOption ).'">';
+                echo '<div id="cv-masonry-post-layout-'.esc_attr( $blockID ).'" class="block-'.esc_attr( $blockID ).' cv-block cv-masonry-post-layout cv-block-masonry--'.esc_attr( $layoutOption ).' cv-block-grid--'.esc_attr( $layoutOption ).'">';
                     if ( !empty( $blockTitle ) ) {
                         echo '<h2 class="cv-block-title align--' .esc_attr( $blockTitleAlign ). ' layout--'.esc_attr( $blockTitleLayout ).'"><span>'.esc_html( $blockTitle ).'</span></h2>';
                     }
@@ -978,19 +996,22 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Blocks' ) ):
          */
         public function blog_post_layout_get_taxanomy_ids( $object, $field_name, $request ) {
             $formatted_categories_ids = array();
+            if ( ! isset( $object['id'] ) || ! isset( $object['type'] ) ) {
+                return $formatted_categories_ids;
+            }
             if ( $object['type'] == 'post' ) {
-                return;
+                return $formatted_categories_ids;
             } else {
                 $taxonomies = get_taxonomies( array( 'object_type' => array( $object['type'] ) ) );
-                if ( empty( $taxonomies ) ) {  return; }
+                if ( empty( $taxonomies ) ) {  return $formatted_categories_ids; }
                 foreach( $taxonomies as $taxonomy ) {
                     $categories = get_the_terms( $object['id'], $taxonomy );
                     break;
                 }
             }
-            if ( empty( $categories ) ) { return; }
+            if ( empty( $categories ) || is_wp_error( $categories ) ) { return $formatted_categories_ids; }
             foreach ( $categories as $category ) {
-                $formatted_categories_ids[] .= $category->term_id;
+                $formatted_categories_ids[] = $category->term_id;
             }
 
             return $formatted_categories_ids;
@@ -1019,17 +1040,20 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Blocks' ) ):
          */
         public function blog_post_layout_get_categories_names( $object, $field_name, $request ) {
             $formatted_categories = array();
+            if ( ! isset( $object['id'] ) || ! isset( $object['type'] ) ) {
+                return $formatted_categories;
+            }
             if ( $object['type'] == 'post' ) {
                 $categories = get_the_category($object['id']);
             } else {
                 $taxonomies = get_taxonomies( array( 'object_type' => array( $object['type'] ) ) );
-                if ( empty( $taxonomies ) ) {  return; }
+                if ( empty( $taxonomies ) ) {  return $formatted_categories; }
                 foreach( $taxonomies as $taxonomy ) {
                     $categories = get_the_terms( $object['id'], $taxonomy );
                     break;
                 }
             }
-            if ( empty( $categories ) ) { return; }
+            if ( empty( $categories ) || is_wp_error( $categories ) ) { return $formatted_categories; }
             foreach ( $categories as $category ) {
                 $formatted_categories[ $category->term_id ] = array(
                     'name' => $category->name,
@@ -1061,12 +1085,17 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Blocks' ) ):
          */
         public function blog_post_layout_get_tags_names( $object, $field_name, $request ) {
             $formatted_tags = array();
+            if ( ! isset( $object['id'] ) ) {
+                return $formatted_tags;
+            }
             $tags = wp_get_post_tags( $object['id'] );
-            foreach ( $tags as $tag ) {
-                $formatted_tags[ $tag->term_id ] = array(
-                    'name' => $tag->name,
-                    'link' => get_tag_link( $tag->term_id )
-                );
+            if ( ! empty( $tags ) && ! is_wp_error( $tags ) ) {
+                foreach ( $tags as $tag ) {
+                    $formatted_tags[ $tag->term_id ] = array(
+                        'name' => $tag->name,
+                        'link' => get_tag_link( $tag->term_id )
+                    );
+                }
             }
 
             return $formatted_tags;
@@ -1093,6 +1122,9 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Blocks' ) ):
          * called by 'blog_post_layout_register_comments_num_rest_field' function
          */
         public function blog_post_layout_get_comments_num( $object, $field_name, $request ) {
+            if ( ! isset( $object['id'] ) ) {
+                return 0;
+            }
             $comment_num = get_comments_number( $object['id'] );
             return $comment_num;
         }

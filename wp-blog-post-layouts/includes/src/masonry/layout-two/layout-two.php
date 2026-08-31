@@ -2,6 +2,10 @@
 /**
  * Masonry block layout two - php render.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
     if ( $postMargin ) {
         $postClass = 'cv-post--imagemargin column--'.$blockColumn;
     } else {
@@ -21,7 +25,7 @@
                 'posts_per_page'    => esc_attr( $postCount ),
                 'order'             => esc_attr( $order ),
                 'orderby'           => esc_attr( $orderBy ),
-                'status'            => 'publish'
+                'post_status'       => 'publish'
             );
             if ( !empty( $postCategory ) && ( $posttype == 'post' ) ) {
                 $masonry_post_args['cat'] = array( esc_attr( $postCategory ) );
@@ -36,7 +40,9 @@
 
             $masonry_post_query = new WP_Query( $masonry_post_args );
             if ( !( $masonry_post_query->have_posts() ) ) {
-                return esc_html__( 'No posts found', 'wp-blog-post-layouts' );
+                echo '<p class="cv-no-posts-found">' . esc_html__( 'No posts found', 'wp-blog-post-layouts' ) . '</p>';
+                echo '</div>';
+                return;
             }
 
             while( $masonry_post_query->have_posts() ) : $masonry_post_query->the_post();
@@ -100,7 +106,7 @@
                                 echo '<span class="cv-post-comments-wrap cv-post-meta-item">';
                                     echo '<a href="'.esc_url( get_the_permalink() ).'/#comments">';
                                         echo esc_html( $comments_number );
-                                        echo '<span class="cv-comment-txt">'.esc_html__( "Comments", "blog-post-layouts" ).'</span>';
+                                        echo '<span class="cv-comment-txt">'.esc_html__( "Comments", "wp-blog-post-layouts" ).'</span>';
                                     echo '</a>';
                                 echo '</span>';
                             }
@@ -125,7 +131,7 @@
                     </div>
                     <h2 class="cv-post-title">
                         <a href="<?php the_permalink(); ?>" target="_self">
-                            <?php the_title(); ?>
+                            <?php echo esc_html( get_the_title() ); ?>
                         </a>
                     </h2>
 
@@ -140,7 +146,7 @@
                     ?>
                     <?php
                         if ( !empty( $buttonLabel ) ) {
-                            echo '<div class="cv-read-more"><a href='.esc_url( get_the_permalink() ).'>'.esc_html( $buttonLabel );
+                            echo '<div class="cv-read-more"><a href="'.esc_url( get_the_permalink() ).'">'.esc_html( $buttonLabel );
                                 if ( $postButtonIcon ) {
                                     echo '<i class="fas fa-arrow-right"></i>';
                                 }

@@ -6,6 +6,10 @@
  * @package WP Blog Post Layouts
  
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 if ( !class_exists( 'Wpblog_Post_Layouts_Deactivator' ) ):
 
     class Wpblog_Post_Layouts_Deactivator {

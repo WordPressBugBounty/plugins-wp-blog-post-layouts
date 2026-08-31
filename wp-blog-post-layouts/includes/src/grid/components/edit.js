@@ -54,8 +54,23 @@ export default class Edit extends Component {
         this.enqueueGooglefonts()
     }
 
-    componentDidUpdate() {
-        this.enqueueGooglefonts()
+    componentDidUpdate( prevProps ) {
+        const prev = prevProps ? prevProps.attributes : {};
+        const current = this.props.attributes;
+        if (
+            prev.blockTitleFontFamily !== current.blockTitleFontFamily ||
+            prev.blockTitleFontWeight !== current.blockTitleFontWeight ||
+            prev.titleFontFamily !== current.titleFontFamily ||
+            prev.titleFontWeight !== current.titleFontWeight ||
+            prev.metaFontFamily !== current.metaFontFamily ||
+            prev.metaFontWeight !== current.metaFontWeight ||
+            prev.descFontFamily !== current.descFontFamily ||
+            prev.descFontWeight !== current.descFontWeight ||
+            prev.buttonFontFamily !== current.buttonFontFamily ||
+            prev.buttonFontWeight !== current.buttonFontWeight
+        ) {
+            this.enqueueGooglefonts();
+        }
     }
 
     render() {
@@ -65,142 +80,143 @@ export default class Edit extends Component {
                 <Style id={ `${blockID}-block-title-style` }>
                     {`
                         .block-${blockID} .cv-block-title{
-                            text-align: ${blockTitleAlign}
+                            text-align: ${blockTitleAlign};
                         }
                     `}
                 </Style>
-                { typographyOption == false &&
+                { ( typographyOption || typographyOption === false ) &&
                     <Style id={ `${blockID}-block-style` }>
                         {`
                         .block-${blockID} .cv-block-title{
-                            font-family: ${blockTitleFontFamily}
-                            font-weight: ${blockTitleFontWeight}
-                            font-size: ${blockTitleFontSize}px
-                            font-style: ${blockTitleFontStyle}
-                            text-transform: ${blockTitleTextTransform}
-                            text-decoration: ${blockTitleTextDecoration}
-                            color: ${blockTitleColor}
-                            line-height: ${blockTitleLineHeight}
-                        }
+                            font-family: ${blockTitleFontFamily};
+                            font-weight: ${blockTitleFontWeight};
+                            font-size: ${blockTitleFontSize}px;
+                            font-style: ${blockTitleFontStyle};
+                            text-transform: ${blockTitleTextTransform};
+                            text-decoration: ${blockTitleTextDecoration};
+                            color: ${blockTitleColor};
+                            line-height: ${blockTitleLineHeight};
+                        };
 
                         .block-${blockID} .cv-block-title span::before{
-                            background: ${blockTitleBorderColor}
-                        }
+                            background: ${blockTitleBorderColor};
+                        };
 
                         .block-${blockID} .cv-block-title span::after{
-                            background: ${blockTitleBorderColor}
-                        }
+                            background: ${blockTitleBorderColor};
+                        };
 
                         .block-${blockID} .cv-block-title.layout--four span{
                             border-color: ${blockTitleBorderColor} !important;
-                        }
+                        };
 
                         .block-${blockID} .cv-block-title.layout--four span:after{
                             border-color: ${blockTitleBorderColor} !important;
                             background: #ffffff !important;
-                        }
+                        };
 
                         .block-${blockID} .cv-block-title.layout--five span:before{
                             border-color: ${blockTitleBorderColor} !important;
                             border-left: none;
                             background: #ffffff !important;
-                        }
+                        };
 
                         .block-${blockID} .cv-block-title.layout--five span:after{
                             border-color: ${blockTitleBorderColor} !important;
                             border-left: none;
                             background: #ffffff !important;
-                        }
+                        };
 
                         .block-${blockID} .cv-post-title a{
-                            text-align: ${titleTextAlign}
-                            font-family: ${titleFontFamily}
-                            font-weight: ${titleFontWeight}
-                            font-size: ${titleFontSize}px
-                            font-style: ${titleFontStyle}
-                            text-transform: ${titleTextTransform}
-                            text-decoration: ${titleTextDecoration}
-                            color: ${titleFontColor}
-                            line-height: ${titlelineHeight}
-                        }
+                            text-align: ${titleTextAlign};
+                            font-family: ${titleFontFamily};
+                            font-weight: ${titleFontWeight};
+                            font-size: ${titleFontSize}px;
+                            font-style: ${titleFontStyle};
+                            text-transform: ${titleTextTransform};
+                            text-decoration: ${titleTextDecoration};
+                            color: ${titleFontColor};
+                            line-height: ${titlelineHeight};
+                        };
 
                         .block-${blockID} .cv-post-title a:hover{
-                            color: ${titleHoverColor}
-                        }
+                            color: ${titleHoverColor};
+                        };
 
                         .block-${blockID} .cv-post-meta a{
-                            text-align: ${metaTextAlign}
-                            font-family: ${metaFontFamily}
-                            font-weight: ${metaFontWeight}
-                            font-size: ${metaFontSize}px
-                            font-style: ${metaFontStyle}
-                            text-transform: ${metaTextTransform}
-                            text-decoration: ${metaTextDecoration}
-                            color: ${metaFontColor}
-                            line-height: ${metalineHeight}
-                        }
+                            text-align: ${metaTextAlign};
+                            font-family: ${metaFontFamily};
+                            font-weight: ${metaFontWeight};
+                            font-size: ${metaFontSize}px;
+                            font-style: ${metaFontStyle};
+                            text-transform: ${metaTextTransform};
+                            text-decoration: ${metaTextDecoration};
+                            color: ${metaFontColor};
+                            line-height: ${metalineHeight};
+                        };
 
                         .block-${blockID} .cv-post-meta > span{
-                            text-align: ${metaTextAlign}
-                            font-family: ${metaFontFamily}
-                            font-weight: ${metaFontWeight}
-                            font-size: ${metaFontSize}px
-                            font-style: ${metaFontStyle}
-                            text-transform: ${metaTextTransform}
-                            text-decoration: ${metaTextDecoration}
-                            color: ${metaFontColor}
-                            line-height: ${metalineHeight}
-                        }
+                            text-align: ${metaTextAlign};
+                            font-family: ${metaFontFamily};
+                            font-weight: ${metaFontWeight};
+                            font-size: ${metaFontSize}px;
+                            font-style: ${metaFontStyle};
+                            text-transform: ${metaTextTransform};
+                            text-decoration: ${metaTextDecoration};
+                            color: ${metaFontColor};
+                            line-height: ${metalineHeight};
+                        };
 
                         .block-${blockID} .cv-post-meta a:hover{
-                            color: ${metaHoverColor}
-                        }
+                            color: ${metaHoverColor};
+                        };
 
                         .block-${blockID} .cv-post-meta > span:hover{
-                            color: ${metaHoverColor}
-                        }
+                            color: ${metaHoverColor};
+                        };
 
+                        .block-${blockID} .cv-post-content,
                         .block-${blockID} .cv-post-content p{
-                            text-align: ${descTextAlign}
-                            font-family: ${descFontFamily}
-                            font-weight: ${descFontWeight}
-                            font-size: ${descFontSize}px
-                            font-style: ${descFontStyle}
-                            text-transform: ${descTextTransform}
-                            text-decoration: ${descTextDecoration}
-                            color: ${descFontColor}
-                            line-height: ${desclineHeight}
-                        }
+                            text-align: ${descTextAlign};
+                            font-family: ${descFontFamily};
+                            font-weight: ${descFontWeight};
+                            font-size: ${descFontSize}px;
+                            font-style: ${descFontStyle};
+                            text-transform: ${descTextTransform};
+                            text-decoration: ${descTextDecoration};
+                            color: ${descFontColor};
+                            line-height: ${desclineHeight};
+                        };
 
                         .block-${blockID} .cv-read-more a{
-                            font-family: ${buttonFontFamily}
-                            font-weight: ${buttonFontWeight}
-                            font-size: ${buttonFontSize}px
-                            text-transform: ${buttonTextTransform}
-                            color: ${buttonFontColor}
-                            background-color: ${buttonBackgroundColor}
-                            padding-top: ${buttonPaddingTop}px
-                            padding-right: ${buttonPaddingRight}px
-                            padding-bottom: ${buttonPaddingBottom}px
-                            padding-left: ${buttonPaddingLeft}px
-                            border-style: ${buttonBorderType}
-                            border-width: ${buttonBorderWeight}px
-                            border-color: ${buttonBorderColor}
+                            font-family: ${buttonFontFamily};
+                            font-weight: ${buttonFontWeight};
+                            font-size: ${buttonFontSize}px;
+                            text-transform: ${buttonTextTransform};
+                            color: ${buttonFontColor};
+                            background-color: ${buttonBackgroundColor};
+                            padding-top: ${buttonPaddingTop}px;
+                            padding-right: ${buttonPaddingRight}px;
+                            padding-bottom: ${buttonPaddingBottom}px;
+                            padding-left: ${buttonPaddingLeft}px;
+                            border-style: ${buttonBorderType};
+                            border-width: ${buttonBorderWeight}px;
+                            border-color: ${buttonBorderColor};
                         }
 
                         .block-${blockID} .cv-read-more{
-                            text-align: ${buttonTextAlign}
+                            text-align: ${buttonTextAlign};
                         }
 
                         .block-${blockID} .cv-read-more a:hover{
-                            color: ${buttonHoverColor}
-                            background-color: ${buttonBackgroundHoverColor}
-                            border-color: ${buttonBorderHoverColor}
+                            color: ${buttonHoverColor};
+                            background-color: ${buttonBackgroundHoverColor};
+                            border-color: ${buttonBorderHoverColor};
                         }
                     `}
                     </Style>
                 }
-                <div id="cv-grid-post-layout" className={ `block-${blockID} cv-block cv-block-grid--${layoutOption}` }>
+                <div id={ `cv-grid-post-layout-${blockID}` } className={ `block-${blockID} cv-block cv-block-grid--${layoutOption}` }>
                     {
                         ( () => {
                             if( !!blockTitle ) {

@@ -7,6 +7,10 @@
  * @since 1.0.0
  * @package WP Blog Post Layouts
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 if ( !class_exists( 'Wpblog_Post_Layouts_Admin' ) ) :
 
     class Wpblog_Post_Layouts_Admin {
@@ -233,12 +237,12 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Admin' ) ) :
                         <span class="dashicons dashicons-thumbs-up"></span>
                         <span><?php esc_html_e( 'Sure', 'wp-blog-post-layouts' ); ?></span>
                     </a>
-                    <a href="<?php echo wp_nonce_url( add_query_arg( 'wp_blog_post_layouts_ignore_review_notice_partially', true ), 'wpblog_post_layouts_nonce' ); ?>" class="btn button-secondary">
+                    <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'wp_blog_post_layouts_ignore_review_notice_partially', true ), 'wpblog_post_layouts_nonce' ) ); ?>" class="btn button-secondary">
                         <span class="dashicons dashicons-calendar"></span>
                         <span><?php esc_html_e( 'Maybe later', 'wp-blog-post-layouts' ); ?></span>
                     </a>
 
-                    <a href="<?php echo wp_nonce_url( add_query_arg( 'wp_blog_post_layouts_ignore_theme_review_notice', true ), 'wpblog_post_layouts_nonce' ); ?>" class="btn button-secondary">
+                    <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'wp_blog_post_layouts_ignore_theme_review_notice', true ), 'wpblog_post_layouts_nonce' ) ); ?>" class="btn button-secondary">
                         <span class="dashicons dashicons-smiley"></span>
                         <span><?php esc_html_e( 'I already did', 'wp-blog-post-layouts' ); ?></span>
                     </a>
@@ -273,7 +277,7 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Admin' ) ) :
                             <span class="dashicons dashicons-upload"></span>
                             <span><?php esc_html_e( 'Upgrade To Premium', 'wp-blog-post-layouts' ); ?></span>
                         </a>
-                        <a href="<?php echo wp_nonce_url( add_query_arg( 'wpblog_post_layouts_upgrade_premium', true ), 'wpblog_post_layouts_nonce' ); ?>" class="btn button-secondary">
+                        <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'wpblog_post_layouts_upgrade_premium', true ), 'wpblog_post_layouts_nonce' ) ); ?>" class="btn button-secondary">
                             <span class="dashicons dashicons-no"></span>
                             <span><?php esc_html_e( 'Dismiss this notice', 'wp-blog-post-layouts' ); ?></span>
                         </a>

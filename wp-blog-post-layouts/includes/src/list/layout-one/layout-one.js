@@ -79,64 +79,64 @@ class ListOne extends Component {
             let hastags = Array.isArray(gettagids) && gettagids.length && tagsOption;
 
             return (
-                <article id={`post-${post.id}`} class={ `cv-post post-format--${getformat}` }>
-                    <div class="cv-post-left-wrap">
-                        <div class="cv-post-thumb">
-                            <a href={ post.link }><img src={image_url} alt={decodeEntities( post.title.rendered.trim() )}/></a>
+                <article id={`post-${post.id}`} className={ `cv-post post-format--${getformat}` }>
+                    <div className="cv-post-left-wrap">
+                        <div className="cv-post-thumb">
+                            <a href={ post.link } onClick={ ( e ) => e.preventDefault() }><img src={image_url} alt={decodeEntities( post.title.rendered.trim() )}/></a>
                         </div>
                     </div>
-                    <div class="cv-post-right-wrap">
+                    <div className="cv-post-right-wrap">
                         {
                             ( () => { 
                                 if( hascategories ) {
-                                    return <div class="cv-post-cats-wrap">{ getcategoryids.map( ( getcategoryid ) => {
-                                        return <span class="cv-post-cat"><a href={getcategories[getcategoryid].link}>{ getcategories[getcategoryid].name }</a></span>
+                                    return <div className="cv-post-cats-wrap">{ getcategoryids.map( ( getcategoryid ) => {
+                                        return <span className="cv-post-cat"><a href={getcategories[getcategoryid].link} onClick={ ( e ) => e.preventDefault() }>{ getcategories[getcategoryid].name }</a></span>
                                     } ) }</div>
                                 }
                             }) ()
                         }
-                        <h2 class="cv-post-title">
-                            <a href={post.link} target="_self">
+                        <h2 className="cv-post-title">
+                            <a href={post.link} target="_self" onClick={ ( e ) => e.preventDefault() }>
                                 { decodeEntities( post.title.rendered.trim() ) }
                             </a>
                         </h2>
-                        <div class={ `cv-post-meta${getmetaIcon}` }>
+                        <div className={ `cv-post-meta${getmetaIcon}` }>
                             { dateOption &&
-                                <span class="cv-post-date cv-post-meta-item">
-                                    <a href={ `${post.link}` }>
+                                <span className="cv-post-date cv-post-meta-item">
+                                    <a href={ `${post.link}` } onClick={ ( e ) => e.preventDefault() }>
                                         { moment( post.date_gmt ).local().format('MMMM DD, Y') }
                                     </a>
                                 </span>
                             }
                             { ( (typeof post.author !== 'undefined' ) && authorOption ) &&
-                                <span class="cv-post-author-name cv-post-meta-item">{ escapeHTML( __( 'By:', 'wp-blog-post-layouts' ) )  }<a href={author_url} >{ author_name }</a></span>
+                                <span className="cv-post-author-name cv-post-meta-item">{ escapeHTML( __( 'By:', 'wp-blog-post-layouts' ) )  }<a href={author_url} onClick={ ( e ) => e.preventDefault() }>{ author_name }</a></span>
                             }
                             {
                                 ( () => { 
                                     if( hastags ) {
-                                        return <span class="cv-post-tags-wrap cv-post-meta-item">{ gettagids.map( ( gettagid ) => {
-                                            return <span class="cv-post-tag"><a href={gettags[gettagid].link}>{ gettags[gettagid].name }</a></span>
+                                        return <span className="cv-post-tags-wrap cv-post-meta-item">{ gettagids.map( ( gettagid ) => {
+                                            return <span className="cv-post-tag"><a href={gettags[gettagid].link} onClick={ ( e ) => e.preventDefault() }>{ gettags[gettagid].name }</a></span>
                                         } ) }</span>
                                     }
                                 }) ()
                             }
                             { ( (typeof post.comments_number !== 'undefined' ) && commentOption ) && 
-                                <span class="cv-post-comments-wrap cv-post-meta-item">
-                                    <a href={ `${post.link}/#comments` }>
+                                <span className="cv-post-comments-wrap cv-post-meta-item">
+                                    <a href={ `${post.link}/#comments` } onClick={ ( e ) => e.preventDefault() }>
                                         { post.comments_number }
-                                        <span class="cv-comment-txt">{ escapeHTML( __( 'Comments', 'wp-blog-post-layouts' ) ) }</span>
+                                        <span className="cv-comment-txt">{ escapeHTML( __( 'Comments', 'wp-blog-post-layouts' ) ) }</span>
                                     </a>
                                 </span>
                             }
                         </div>
                         { ( typeof post[contentType] !== 'undefined' ) &&
-                            <div class="cv-post-content" dangerouslySetInnerHTML={{ __html: post[contentType].rendered.trim().split(' ').slice(0,wordCount).join(' ') }} />    
+                            <div className="cv-post-content" dangerouslySetInnerHTML={{ __html: post[contentType].rendered.trim().split(' ').slice(0,wordCount).join(' ') }} />    
                         }
                         { buttonLabel &&
-                            <div class="cv-read-more">
-                                <a href={post.link}>{ buttonLabel }
+                            <div className="cv-read-more">
+                                <a href={post.link} onClick={ ( e ) => e.preventDefault() }>{ buttonLabel }
                                     { postButtonIcon &&
-                                        <i class="fas fa-arrow-right"></i>
+                                        <i className="fas fa-arrow-right"></i>
                                     }
                                 </a>
                             </div>

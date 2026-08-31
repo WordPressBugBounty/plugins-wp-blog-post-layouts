@@ -6,6 +6,10 @@
  * @since 1.0.0
  * @package WP Blog Post Layouts
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 if ( !class_exists( 'Wpblog_Post_Layouts_Elements' ) ):
 
     class Wpblog_Post_Layouts_Elements {
@@ -95,9 +99,10 @@ if ( !class_exists( 'Wpblog_Post_Layouts_Elements' ) ):
          * Enqueue elements scripts.
          */
         public function elementor_enqueue_scripts() {
+            wp_enqueue_script( 'masonry' );
             wp_enqueue_script( 'wpblog-post-layouts-elements-scripts',
                 plugins_url( 'assets/js/elementor-frontend.js', __FILE__ ),
-                array('jquery'),
+                array( 'jquery', 'masonry', 'imagesloaded' ),
                 WPBLOG_POST_LAYOUTS_VERSION,
                 true
             );

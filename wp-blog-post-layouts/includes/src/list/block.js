@@ -346,22 +346,8 @@ registerBlockType( 'wpblog-post-layouts/cv-list-blog-post-layout', {
     category: 'wpblog-post-layouts-blocks',
     attributes: listlayoutAttributes,
     supports: { align: ["wide","full"] },
-    example: {
-        attributes: {
-            'blockColumn' : 'one',
-            'postCount' : 2,
-            'dateOption' : false,
-            'authorOption' : false,
-            'categoryOption' : false,
-            'tagsOption' : false,
-            'commentOption' : false,
-            'contentOption' : false,
-            'buttonLabel'   : '',
-            'postFormatIcon': false
-        }
-    },
     edit: props => {
-        props.attributes.blockID = props.clientId
+        props.attributes.blockID = props.clientId;
         return [
                 <Inspector { ...props } />,
                 <Edit { ...props } />

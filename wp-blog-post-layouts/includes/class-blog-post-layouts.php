@@ -8,6 +8,10 @@
 * @since 1.0.0
  * @package WP Blog Post Layouts
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 if ( !class_exists( 'Wpblog_Post_Layouts' ) ):
 
     class Wpblog_Post_Layouts {
@@ -110,15 +114,10 @@ if ( !class_exists( 'Wpblog_Post_Layouts' ) ):
                 '4.1.4',
                 'all'
             );
-            wp_enqueue_script( 'masonry',
-                plugins_url( '/assets/masonry/masonry.pkgd.min.js', __FILE__ ),
-                array( 'jquery' ),
-                WPBLOG_POST_LAYOUTS_VERSION,
-                true
-            );
+            wp_enqueue_script( 'masonry' );
             wp_enqueue_script( 'wpblog-post-layouts-public-script',
                 plugins_url( '/assets/js/frontend.js', __FILE__ ),
-                array( 'jquery' ),
+                array( 'jquery', 'masonry', 'imagesloaded' ),
                 WPBLOG_POST_LAYOUTS_VERSION,
                 true
             );

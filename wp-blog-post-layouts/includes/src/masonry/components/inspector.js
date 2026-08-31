@@ -25,12 +25,12 @@ export default class Inspector extends Component {
                     tabs={[
                         {
                             name: "generalInspector",
-                            title: escapeHTML( __( "General", "blog-post-layouts" ) ),
+                            title: escapeHTML( __( "General", "wp-blog-post-layouts" ) ),
                             className: "tab-panel"
                         },
                         {
                             name: "styleInspector",
-                            title: escapeHTML( __( "Style", "blog-post-layouts" ) ),
+                            title: escapeHTML( __( "Style", "wp-blog-post-layouts" ) ),
                             className: "tab-panel"
                         }
                     ]}

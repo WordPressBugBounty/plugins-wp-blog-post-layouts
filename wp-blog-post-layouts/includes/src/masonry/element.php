@@ -1116,6 +1116,7 @@ class Wpblog_Post_Layouts_Masonry_Element extends \Elementor\Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
         extract( $settings );
+        $blockTitleAlign = ! empty( $blockTitleAlign ) ? $blockTitleAlign : 'left';
         $element_id = $this->get_id();
         $posttype = 'post';
         $dateOption = ( $dateOption === 'show' );
@@ -1127,7 +1128,7 @@ class Wpblog_Post_Layouts_Masonry_Element extends \Elementor\Widget_Base {
         $postButtonIcon = ( $postButtonIcon === 'show' );
         $postMargin = ( $postMargin === 'show' );
 
-        echo '<div id="cv-masonry-post-layout" class="block-'.esc_attr( $element_id ).' cv-block cv-masonry-post-layout cv-block-masonry--'.esc_attr( $layoutOption ).' cv-block-grid--'.esc_attr( $layoutOption ).'">';
+        echo '<div id="cv-masonry-post-layout-'.esc_attr( $element_id ).'" class="block-'.esc_attr( $element_id ).' cv-block cv-masonry-post-layout cv-block-masonry--'.esc_attr( $layoutOption ).' cv-block-grid--'.esc_attr( $layoutOption ).'">';
             if ( !empty( $blockTitle ) ) {
                 echo '<h2 class="cv-block-title align--' .esc_attr( $blockTitleAlign ). ' layout--'.esc_attr( $blockTitleLayout ).'"><span>'.esc_html( $blockTitle ).'</span></h2>';
             }

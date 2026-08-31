@@ -30,22 +30,8 @@ registerBlockType( 'wpblog-post-layouts/cv-grid-blog-post-layout', {
     category: 'wpblog-post-layouts-blocks',
     attributes: gridlayoutAttributes,
     supports: { align: ["wide","full"] },
-    example: {
-        attributes: {
-            'blockColumn' : 'two',
-            'postCount' : 4,
-            'dateOption' : false,
-            'authorOption' : false,
-            'categoryOption' : false,
-            'tagsOption' : false,
-            'commentOption' : false,
-            'contentOption' : false,
-            'buttonLabel'   : '',
-            'postFormatIcon': false
-        }
-    },
     edit: props => {
-        props.attributes.blockID = props.clientId
+        props.attributes.blockID = props.clientId;
         return [
             <Inspector { ...props } />,
             <Edit { ...props } />

@@ -1071,7 +1071,7 @@ class Wpblog_Post_Layouts_Grid_Element extends \Elementor\Widget_Base {
                         'type' => \Elementor\Controls_Manager::COLOR,
                         'default' => '#f47e00',
                         'selectors' => [
-                            '{{WRAPPER}} .cv-read-more a::hover' => 'border-color: {{VALUE}}',
+                            '{{WRAPPER}} .cv-read-more a:hover' => 'border-color: {{VALUE}}',
                         ],
                         'conditions' => [
                             'terms' => [
@@ -1128,6 +1128,7 @@ class Wpblog_Post_Layouts_Grid_Element extends \Elementor\Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
         extract( $settings );
+        $blockTitleAlign = ! empty( $blockTitleAlign ) ? $blockTitleAlign : 'left';
         $element_id = $this->get_id();
         $dateOption = ( $dateOption === 'show' );
         $authorOption = ( $authorOption === 'show' );
@@ -1139,7 +1140,7 @@ class Wpblog_Post_Layouts_Grid_Element extends \Elementor\Widget_Base {
         $postMargin = ( $postMargin === 'show' );
         $posttype = 'post';
 
-        echo '<div id="cv-grid-post-layout" class="block-'.esc_attr( $element_id ).' cv-block cv-block-grid--'.esc_attr( $layoutOption ).'">';
+        echo '<div id="cv-grid-post-layout-'.esc_attr( $element_id ).'" class="block-'.esc_attr( $element_id ).' cv-block cv-block-grid--'.esc_attr( $layoutOption ).'">';
             if ( !empty( $blockTitle ) ) {
                 echo '<h2 class="cv-block-title align--' .esc_attr( $blockTitleAlign ). ' layout--'.esc_attr( $blockTitleLayout ).'"><span>'.esc_html( $blockTitle ).'</span></h2>';
             }

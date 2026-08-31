@@ -2,6 +2,10 @@
 /**
  * Content for dashboard section in admin area.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 ?>
 <div id="cv-dashboard">
     <h2 class="cv-admin-title">

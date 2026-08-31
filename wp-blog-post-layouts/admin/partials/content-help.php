@@ -2,6 +2,10 @@
 /**
  * Content for help section in admin area.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 ?>
 <div id="cv-help" style="display:none">
     

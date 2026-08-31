@@ -2,9 +2,9 @@
 Contributors:       codevibrant
 Tags:               gutenberg-blocks, grid, post layouts, elementor, blocks, block editor, drag-and-drop, editor, gutenberg, gutenberg editor, page-builder, design, google fonts
 Requires at least:  5.0
-Tested up to:       6.8
+Tested up to:       7.1
 Requires PHP:       7.2
-Stable tag:         1.1.4
+Stable tag:         1.1.5
 License:            GNU General Public License v3 or later
 License URI:        http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -105,6 +105,20 @@ Yes, this plugin comes with a flexible and customizable typography option
 12. Frontpage list layout three.
 
 == Changelog ==
+
+= 1.1.5 - August 31, 2026 =
+   * Fixed - Masonry layout frontend column horizontal spacing and responsive gap layout.
+   * Fixed - Font Awesome 5 Free CSS and custom icons loading inside Gutenberg block editor iframe.
+   * Fixed - PHP undefined array key warnings (`type`, `id`) in REST API field callbacks.
+   * Fixed - Gutenberg editor performance optimization by conditionally bypassing server-side post content block parsing in admin asset enqueues.
+   * Fixed - Block inspector tabs panel UI styling with modern segmented control design.
+   * Modified - Gutenberg Block Inserter hover preview configured for lightweight listing.
+   * Fixed - Text domain inconsistencies (`blog-post-layouts` replaced with `wp-blog-post-layouts`).
+   * Fixed - Duplicate container HTML IDs when multiple block/widget instances are present.
+   * Fixed - JavaScript selector targeting for scoped Masonry container initialization.
+   * Fixed - Escaped post titles with `esc_html(get_the_title())` across all layout templates.
+   * Fixed - Corrected WP_Query status argument to `post_status` => `'publish'`.
+   * Fixed - Graceful fallback message handling when no posts are found.
 
 = 1.1.4 - June 20, 2024 =
    Fixed - Issue in elementor file path.
